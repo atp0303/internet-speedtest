@@ -9,8 +9,6 @@ from datetime import datetime
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
 
-print(sys.argv[0])
-
 
 def push(influxInstance, org, bucket, token):
     # You can generate an API token from the "API Tokens Tab" in the UI
@@ -43,3 +41,7 @@ def push(influxInstance, org, bucket, token):
         query_api = client.query_api()
         write_api.write(bucket=bucket, record=body)
         client.close()
+
+
+print(sys.argv)
+push(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

@@ -1,5 +1,5 @@
 # home-speedtest
-Code for running speedtest on home internet connections.
+Perform Ookla speed test and save results to influxdb
 
 ## Installation
 General install steps: https://github.com/influxdata/influxdb-client-python#installation

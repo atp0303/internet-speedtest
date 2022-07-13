@@ -12,9 +12,9 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 print(sys.argv[0])
 
 # You can generate an API token from the "API Tokens Tab" in the UI
-token = "KE760kQWgvqIJ1H0F9v6oeOUfB1O-gxX-HnqlLmZXdqGh0B77BMsAgSlcA8wwDukhnUcZlHAPHjS6NupNjqTCA=="
+token = "vQiDakQmpbNCo0BdEF-mEUyY5IKUqkJfdb_OssTc4-aCeE5vmpFHXOQmwnWX-8IoAK1XW-K0Lk4NnR7SAFWqYg=="
 org = "Home"
-bucket = "Internet"
+bucket = "internet"
 time = datetime.utcnow()
 
 # run a single-threaded speedtest using default server
@@ -30,8 +30,8 @@ with InfluxDBClient(url="http://10.88.88.10:49161", token=token, org=org) as cli
         {
             "measurement": "speedtest",
             "time": time,
+            "location": sys.argv[0],
             "fields": {
-                "location": sys.argv[0],
                 "download": res["download"],
                 "upload": res["upload"],
                 "ping": res["ping"]

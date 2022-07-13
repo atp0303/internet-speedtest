@@ -11,34 +11,35 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 
 print(sys.argv[0])
 
-# You can generate an API token from the "API Tokens Tab" in the UI
-token = "vQiDakQmpbNCo0BdEF-mEUyY5IKUqkJfdb_OssTc4-aCeE5vmpFHXOQmwnWX-8IoAK1XW-K0Lk4NnR7SAFWqYg=="
-org = "Home"
-bucket = "internet"
-time = datetime.utcnow()
 
-# run a single-threaded speedtest using default server
-s = speedtest.Speedtest()
-s.get_best_server()
-s.download(threads=1)
-s.upload(threads=1)
-res = s.results.dict()
+def push(influxInstance, org, bucket, token):
+    # You can generate an API token from the "API Tokens Tab" in the UI
+    token = token
+    org = org
+    bucket = bucket
+    time = datetime.utcnow()
 
-with InfluxDBClient(url="http://10.88.88.10:49161", token=token, org=org) as client:
-    print(res)
-    body = [
-        {
-            "measurement": "speedtest",
-            "time": time,
-            "location": sys.argv[0],
-            "fields": {
-                "download": res["download"],
-                "upload": res["upload"],
-                "ping": res["ping"]
+    # run a single-threaded speedtest using default server
+    s = speedtest.Speedtest()
+    s.get_best_server()
+    s.download(threads=1)
+    s.upload(threads=1)
+    res = s.results.dict()
+
+    with InfluxDBClient(url=influxInstance, token=token, org=org) as client:
+        print(res)
+        body = [
+            {
+                "measurement": "speedtest",
+                "time": time,
+                "fields": {
+                    "download": res["download"],
+                    "upload": res["upload"],
+                    "ping": res["ping"]
+                }
             }
-        }
-    ]
-    write_api = client.write_api(write_options=SYNCHRONOUS)
-    query_api = client.query_api()
-    write_api.write(bucket=bucket, record=body)
-    client.close()
+        ]
+        write_api = client.write_api(write_options=SYNCHRONOUS)
+        query_api = client.query_api()
+        write_api.write(bucket=bucket, record=body)
+        client.close()

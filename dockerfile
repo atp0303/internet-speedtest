@@ -5,7 +5,7 @@ ADD speedtest-influxdb.py /speedtest/speedtest-influxdb.py
 ENV INFLUXDB_SERVER="http://10.88.88.10:49161"
 ENV INFLUXDB_ORG="19B"
 ENV INFLUXDB_BUCKET="internet"
-ENV INFLUXDB_TOKEN="P27mKSa_0FEMZPpJPRaSRKRwNgR6zszfjdVspasBXA98Ib4veDnFgs2DN91YeU3ha6L3vE6L3czLIbbeaOaW3Q=="
+ENV INFLUXDB_TOKEN=""
 ENV SPEEDTEST_INTERVAL="900"
 
 RUN apt-get -y update

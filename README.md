@@ -9,7 +9,7 @@ General install steps: https://github.com/influxdata/influxdb-client-python#inst
 3. `docker build -t atp33/internet-speedtest:0.1.0`
 4. `docker run --name test -t internetspeedtest:latest`
 
-## Running
+## Usage
 
 | Parameters  |  Values
 |---|---
@@ -20,4 +20,17 @@ General install steps: https://github.com/influxdata/influxdb-client-python#inst
 | SPEEDTEST_INTERVAL  |   How often will the speed test be invoked.  Default value is 900 seconds
 | DEBUG  |   Display diagnostics data in the terminal.  Default value is false.
 
+Enviroment variables can be overidden at runtime
+
+```
+docker run -d --name=internet-speedtest \
+    -e INFLUXDB_SERVER=http://10.88.88.10:49161
+	-e INFLUXDB_ORG=19B
+	-e INFLUXDB_BUCKET=internet
+	-e INFLUXDB_TOKEN=TOKEN	
+	-e DEBUG=TRUE
+	-e SPEEDTEST_INTERVAL "60"
+    --restart always \
+    atp33/internet-speedtest:0.1.3
+```
 

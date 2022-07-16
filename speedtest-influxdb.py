@@ -13,7 +13,7 @@ for key, value in os.environ.items():
     print('{}: {}'.format(key, value))
 
 
-def push(influxServer, org, bucket, token, interval, debug):
+def push(influxServer, org, bucket, token, interval):
     import time as t
     while True:
         token = token
@@ -27,8 +27,7 @@ def push(influxServer, org, bucket, token, interval, debug):
         s.download(threads=1)
         s.upload(threads=1)
         res = s.results.dict()
-        if(debug == 'TRUE'):
-            print(res)
+        print(res)
 
         with InfluxDBClient(url=influxServer, token=token, org=org) as client:
             body = [
@@ -49,4 +48,4 @@ def push(influxServer, org, bucket, token, interval, debug):
 
 
 push(os.environ['INFLUXDB_SERVER'], os.environ['INFLUXDB_ORG'],
-     os.environ['INFLUXDB_BUCKET'], os.environ['INFLUXDB_TOKEN'], os.environ['SPEEDTEST_INTERVAL'], os.environ['DEBUG'])
+     os.environ['INFLUXDB_BUCKET'], os.environ['INFLUXDB_TOKEN'], os.environ['SPEEDTEST_INTERVAL'])

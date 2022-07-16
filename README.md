@@ -1,13 +1,11 @@
 # home-speedtest
 Perform Ookla speed test and save results to influxdb
 
-## Installation
-General install steps: https://github.com/influxdata/influxdb-client-python#installation
+## Docker
+General steps for building and pushing docker images
+1. `docker build --build-arg base_image=python:3.10-bullseye -t atp33/internet-speedtest:0.1.9-amd64 -t atp33/internet-speedtest:latest-amd64 . && docker build --build-arg base_image=arm32v7/python:3.10-bullseye -t atp33/internet-speedtest:0.1.9-arm32 -t atp33/internet-speedtest:latest-arm32 .`
+2. `docker push atp33/internet-speedtest --all-tags`
 
-1. `pip install 'influxdb-client[ciso]' speedtest-cli --user`
-2. `docker stop -f test && docker rm -f test` - optional
-3. `docker build -t atp33/internet-speedtest:0.1.0`
-4. `docker run --name test -t internetspeedtest:latest`
 
 ## Usage
 
@@ -30,6 +28,6 @@ docker run -d --name=internet-speedtest \
 	-e DEBUG=TRUE
 	-e SPEEDTEST_INTERVAL "60"
     --restart always \
-    atp33/internet-speedtest:0.1.3
+    atp33/internet-speedtest:latest-amd64
 ```
 

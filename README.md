@@ -18,7 +18,6 @@ General install steps: https://github.com/influxdata/influxdb-client-python#inst
 | INFLUXDB_BUCKET  |   The bucket name of the influxdb instance which will hold the speedtest data
 | INFLUXDB_TOKEN  |   The influxdb API token with the read/write scope
 | SPEEDTEST_INTERVAL  |   How often will the speed test be invoked.  Default value is 900 seconds
-| DEBUG  |   Display diagnostics data in the terminal.  Default value is false.
 
 Enviroment variables can be overidden at runtime
 

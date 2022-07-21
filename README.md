@@ -3,9 +3,7 @@ Perform Ookla speed test and save results to influxdb
 
 ## Docker
 General steps for building and pushing docker images
-1. `docker build --build-arg base_image=python:3.10-bullseye -t atp33/internet-speedtest:0.1.9-amd64 -t atp33/internet-speedtest:latest-amd64 . && docker build --build-arg base_image=arm32v7/python:3.10-bullseye -t atp33/internet-speedtest:0.1.9-arm32 -t atp33/internet-speedtest:latest-arm32 .`
-2. `docker push atp33/internet-speedtest --all-tags`
-
+`docker build --build-arg base_image=python:3.10-bullseye -t atp33/internet-speedtest:0.2.0-amd64 -t atp33/internet-speedtest:latest-amd64 . && docker build --build-arg base_image=arm32v7/python:3.10-bullseye -t atp33/internet-speedtest:0.2.0-arm32 -t atp33/internet-speedtest:latest-arm32 . && docker push atp33/internet-speedtest --all-tags`
 
 ## Usage
 

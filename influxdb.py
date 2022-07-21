@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import os
+import subprocess
+import json
 from pydoc import cli
 import influxdb_client
-import speedtest
 
 from datetime import datetime
 
@@ -13,6 +14,15 @@ for key, value in os.environ.items():
     print('{}: {}'.format(key, value))
 
 
+def getSpeedtestResults():
+    process = subprocess.Popen(
+        "/usr/bin/speedtest -f json --accept-license --accept-gdpr",
+        shell=True,
+        stdout=subprocess.PIPE)
+    data = process.stdout.read().decode("utf8")
+    return json.loads(data)
+
+
 def push(influxServer, org, bucket, token, interval):
     import time as t
     while True:
@@ -21,23 +31,18 @@ def push(influxServer, org, bucket, token, interval):
         bucket = bucket
         timestamp = datetime.utcnow()
 
-        # run a single-threaded speedtest using default server
-        s = speedtest.Speedtest()
-        s.get_best_server()
-        s.download(threads=1)
-        s.upload(threads=1)
-        res = s.results.dict()
-        print(res)
-
+        response = getSpeedtestResults()
+        print(response)
         with InfluxDBClient(url=influxServer, token=token, org=org) as client:
             body = [
                 {
                     "measurement": "speedtest",
                     "time": timestamp,
                     "fields": {
-                        "download": res["download"],
-                        "upload": res["upload"],
-                        "ping": res["ping"]
+                        "download": response["download"]["bandwidth"],
+                        "upload": response["upload"]["bandwidth"],
+                        "jitter": response["ping"]["jitter"],
+                        "latency": response["ping"]["latency"],
                     }
                 }
             ]

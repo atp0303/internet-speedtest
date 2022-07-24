@@ -16,6 +16,6 @@ RUN apt-get -y update
 RUN apt-get install wget -y
 RUN wget https://install.speedtest.net/app/cli/${ookla_package}
 RUN tar -xvzf ${ookla_package}
-RUN mv speedtest /usr/bin/speedtest
+RUN mv speedtest /usr/local/bin/speedtest
 
 CMD python3 /internet-speedtest/influxdb.py

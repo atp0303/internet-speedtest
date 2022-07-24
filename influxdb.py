@@ -16,7 +16,7 @@ for key, value in os.environ.items():
 
 def getSpeedtestResults():
     process = subprocess.Popen(
-        "/usr/bin/speedtest -f json --accept-license --accept-gdpr",
+        "/usr/local/bin/speedtest -f json --accept-license --accept-gdpr",
         shell=True,
         stdout=subprocess.PIPE)
     data = process.stdout.read().decode("utf8")
